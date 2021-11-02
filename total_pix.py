@@ -12,8 +12,10 @@ conn = psycopg2.connect(
 
 cur = conn.cursor()
 cur.execute('''CREATE TABLE IF NOT EXISTS number_pix
-               (total int, timestamp timestamp default current_timestamp)''')
+               (total int, timestamp timestamp WITH TIME ZONE default current_timestamp)''')
 conn.commit()
+
+print("sucess")
 
 while(True):
     time.sleep(60)

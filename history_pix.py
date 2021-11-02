@@ -15,6 +15,8 @@ cur.execute('''CREATE TABLE IF NOT EXISTS pix_history
                (hexColor text, indexInFlag int, timestamp timestamp default current_timestamp)''')
 conn.commit()
 
+print("sucess")
+
 while(True):
     url=f"https://api-flag.fouloscopie.com/flag/after/{(datetime.datetime.utcnow()).isoformat()}"
 
@@ -25,6 +27,6 @@ while(True):
 
     ti = time.time()
     for line in data:
-        cur.execute(f"INSERT INTO number_pix VALUES (?,?,?)", (line['hexColor'], line['indexInFlag'], time.time()))
+        cur.execute(f"INSERT INTO number_pix VALUES ({line['hexColor']},{line['indexInFlag']},{time.time()})")
     
     conn.commit()
