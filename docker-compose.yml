@@ -22,7 +22,7 @@ services:
       - db
     networks:
       - private
-    estart: unless-stopped
+    restart: unless-stopped
   db:
     image: postgres:12.0-alpine
     volumes:
@@ -32,17 +32,36 @@ services:
     networks:
       - private
     restart: unless-stopped
-  # grafana:
-  #   image: grafana/grafana
-  #   depends_on:
-  #     - db
-  #   networks:
-  #     - private
-  #   # restart: unless-stopped
+  grafana:
+    ports:
+      - '3000:3000'
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana_teamname.entrypoints=http"
+      - "traefik.http.routers.grafana_teamname.rule=Host(`grafana.teamna.me`)"
+      - "traefik.http.middlewares.grafana_teamname-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.grafana_teamname.middlewares=grafana_teamname-https-redirect"
+      - "traefik.http.routers.grafana_teamname-secure.entrypoints=https"
+      - "traefik.http.routers.grafana_teamname-secure.rule=Host(`grafana.teamna.me`)"
+      - "traefik.http.routers.grafana_teamname-secure.tls=true"
+      - "traefik.http.routers.grafana_teamname-secure.tls.certresolver=http"
+      - "traefik.http.routers.grafana_teamname-secure.service=grafana-grafanal@docker"
+      - "traefik.docker.network=traefik-proxy"
+    volumes:
+      - '../data/:/var/lib/grafana'
+    networks:
+      - traefik-proxy
+      - private
 
 networks:
+  traefik-proxy:
+    external: true
   private:
     driver: overlay
+    attachable: true
 
 volumes:
   postgres_data:
