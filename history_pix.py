@@ -27,6 +27,6 @@ while(True):
 
     ti = time.time()
     for line in data:
-        cur.execute(f"INSERT INTO number_pix VALUES ('{line['hexColor']}',{line['indexInFlag']},{time.time()})")
+        cur.execute(f"INSERT INTO pix_history VALUES ('{line['hexColor']}',{line['indexInFlag']})")
     
     conn.commit()
