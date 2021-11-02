@@ -51,7 +51,7 @@ services:
       - "traefik.http.routers.grafana_teamname-secure.service=grafana-grafanal@docker"
       - "traefik.docker.network=traefik-proxy"
     volumes:
-      - '../data/:/var/lib/grafana'
+      - grafana-storage:/var/lib/grafana
     networks:
       - traefik-proxy
       - private
