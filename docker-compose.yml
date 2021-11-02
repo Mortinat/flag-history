@@ -65,4 +65,5 @@ networks:
 
 volumes:
   postgres_data:
+  grafana-storage:
     
