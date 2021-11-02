@@ -30,6 +30,6 @@ while(True):
     last_timestamp = (datetime.datetime.utcnow()).isoformat()
 
     for line in data:
-        cur.execute(f"INSERT INTO pix_history VALUES ('{line['hexColor']}',{line['indexInFlag']})")
+        cur.execute(f"INSERT INTO pix_history VALUES (%s, %s)", (line['hexColor'], line['indexInFlag']))
     
     conn.commit()
