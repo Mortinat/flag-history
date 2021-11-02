@@ -15,17 +15,20 @@ cur.execute('''CREATE TABLE IF NOT EXISTS pix_history
                (hexColor text, indexInFlag int, timestamp timestamp default current_timestamp)''')
 conn.commit()
 
-print("sucess")
+cur.execute('SELECT timestamp FROM pix_history ORDER BY timestamp DESC NULLS LAST LIMIT  1;')
+
+last_timestamp = cur.fetchall()[0][0].isoformat()
 
 while(True):
-    url=f"https://api-flag.fouloscopie.com/flag/after/{(datetime.datetime.utcnow()).isoformat()}"
+    url=f"https://api-flag.fouloscopie.com/flag/after/{last_timestamp}"
 
     time.sleep(60)
 
     resp = requests.get(url=url)
     data = resp.json()
 
-    ti = time.time()
+    last_timestamp = (datetime.datetime.utcnow()).isoformat()
+
     for line in data:
         cur.execute(f"INSERT INTO pix_history VALUES ('{line['hexColor']}',{line['indexInFlag']})")
     
