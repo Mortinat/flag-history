@@ -2,7 +2,9 @@ FROM python:3.9-alpine3.14
 
 ADD total_pix.py /home/total_pix.py
 
-RUN pip install requests
+RUN pip install --upgrade pip
+RUN pip install requests 
+RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev
+RUN pip install psycopg2
 
-CMD ["/home/total_pix.py"]
-ENTRYPOINT ["python"]
+CMD ["python", "/home/total_pix.py"]

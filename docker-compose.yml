@@ -11,6 +11,7 @@ services:
       - db
     networks:
       - private
+    restart: unless-stopped
   python_history:
     build: 
       context: ./
@@ -21,6 +22,7 @@ services:
       - db
     networks:
       - private
+    estart: unless-stopped
   db:
     image: postgres:12.0-alpine
     volumes:
@@ -29,19 +31,18 @@ services:
       - ./.env.db
     networks:
       - private
-  grafana:
-    image: grafana/grafana
-    depends_on:
-      - db
-    networks:
-      - private
-      - public
+    restart: unless-stopped
+  # grafana:
+  #   image: grafana/grafana
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - private
+  #   # restart: unless-stopped
 
 networks:
   private:
     driver: overlay
-  public:
-    external: true
 
 volumes:
   postgres_data:
