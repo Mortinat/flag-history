@@ -16,7 +16,7 @@ cur.execute('''CREATE TABLE IF NOT EXISTS number_pix
 conn.commit()
 
 while(True):
-    time.sleep(30)
+    time.sleep(60)
     resp = requests.get(url="https://api-flag.fouloscopie.com/flag")
     data = resp.json()
 
