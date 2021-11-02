@@ -38,6 +38,10 @@ services:
     image: grafana/grafana:latest
     container_name: grafana
     restart: unless-stopped
+    environment:
+      - "GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel"
+      - "GF_SERVER_ROOT_URL=https://grafana.teamna.me:443"
+      - "GF_SERVER_DOMAIN=grafana.teamna.me"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.grafana_teamname.entrypoints=http"
@@ -48,7 +52,7 @@ services:
       - "traefik.http.routers.grafana_teamname-secure.rule=Host(`grafana.teamna.me`)"
       - "traefik.http.routers.grafana_teamname-secure.tls=true"
       - "traefik.http.routers.grafana_teamname-secure.tls.certresolver=http"
-      - "traefik.http.routers.grafana_teamname-secure.service=grafana-grafanal@docker"
+      - "traefik.http.routers.grafana_teamname-secure.service=grafana"
       - "traefik.docker.network=traefik-proxy"
     volumes:
       - grafana-storage:/var/lib/grafana
