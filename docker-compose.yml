@@ -43,17 +43,10 @@ services:
       - "GF_SERVER_ROOT_URL=https://grafana.teamna.me:443"
       - "GF_SERVER_DOMAIN=grafana.teamna.me"
     labels:
+      - "traefik.http.routers.codatiFrontend.rule=Host(grafana.teamna.me)"
+      - "traefik.http.routers.codatiFrontend.tls=true"
+      - "traefik.http.routers.codatiFrontend.tls.certresolver=le"
       - "traefik.enable=true"
-      - "traefik.http.routers.grafana_teamname.entrypoints=http"
-      - "traefik.http.routers.grafana_teamname.rule=Host(`grafana.teamna.me`)"
-      - "traefik.http.middlewares.grafana_teamname-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.grafana_teamname.middlewares=grafana_teamname-https-redirect"
-      - "traefik.http.routers.grafana_teamname-secure.entrypoints=https"
-      - "traefik.http.routers.grafana_teamname-secure.rule=Host(`grafana.teamna.me`)"
-      - "traefik.http.routers.grafana_teamname-secure.tls=true"
-      - "traefik.http.routers.grafana_teamname-secure.tls.certresolver=http"
-      - "traefik.http.routers.grafana_teamname-secure.service=grafana"
-      - "traefik.docker.network=traefik-proxy"
     volumes:
       - grafana-storage:/var/lib/grafana
     networks:
