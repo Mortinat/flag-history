@@ -1,8 +1,8 @@
 FROM python:3.9-alpine3.14
 
-ADD api_to_db.py /home/api_to_db.py
+ADD history_pix.py /home/history_pix.py
 
 RUN pip install requests
 
-CMD ["/home/api_to_db.py"]
+CMD ["/home/history_pix.py"]
 ENTRYPOINT ["python"]
