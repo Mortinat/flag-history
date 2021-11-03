@@ -42,6 +42,7 @@ services:
       - "GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel"
       - "GF_SERVER_ROOT_URL=https://grafana.teamna.me:443"
       - "GF_SERVER_DOMAIN=grafana.teamna.me"
+      - "GF_AUTH_ANONYMOUS_ENABLED=true"
     labels:
       - "traefik.http.routers.codatiFrontend.rule=Host(grafana.teamna.me)"
       - "traefik.http.routers.codatiFrontend.tls=true"
