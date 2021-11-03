@@ -46,7 +46,7 @@ services:
     labels:
       - "traefik.http.routers.codatiFrontend.rule=Host(grafana.teamna.me)"
       - "traefik.http.routers.codatiFrontend.tls=true"
-      - "traefik.http.routers.codatiFrontend.tls.certresolver=le"
+      - "traefik.http.routers.codatiFrontend.tls.certresolver=http"
       - "traefik.enable=true"
     volumes:
       - grafana-storage:/var/lib/grafana
