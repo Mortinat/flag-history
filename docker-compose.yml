@@ -33,8 +33,6 @@ services:
       - private
     restart: unless-stopped
   grafana:
-    ports:
-      - '3000:3000'
     image: grafana/grafana:latest
     container_name: grafana
     restart: unless-stopped
