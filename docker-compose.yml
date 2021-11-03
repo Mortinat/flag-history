@@ -44,7 +44,7 @@ services:
       - "GF_SERVER_DOMAIN=grafana.teamna.me"
       - "GF_AUTH_ANONYMOUS_ENABLED=true"
     labels:
-      - "traefik.http.routers.codatiFrontend.rule=Host(grafana.teamna.me)"
+      - "traefik.http.routers.codatiFrontend.rule=Host(`grafana.teamna.me`)"
       - "traefik.http.routers.codatiFrontend.tls=true"
       - "traefik.http.routers.codatiFrontend.tls.certresolver=http"
       - "traefik.enable=true"
