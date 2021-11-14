@@ -12,7 +12,7 @@ conn = psycopg2.connect(
     password=os.environ.get("SQL_PASSWORD", "password"))
 cur = conn.cursor()
 cur.execute('''CREATE TABLE IF NOT EXISTS pix_history
-               (hexColor text, indexInFlag int, timestamp timestamp default current_timestamp)''')
+               (hexColor text, indexInFlag int, author text, timestamp timestamp default current_timestamp)''')
 conn.commit()
 
 cur.execute('SELECT timestamp FROM pix_history ORDER BY timestamp DESC NULLS LAST LIMIT  1;')
@@ -30,6 +30,6 @@ while(True):
     last_timestamp = (datetime.datetime.utcnow()).isoformat()
 
     for line in data:
-        cur.execute(f"INSERT INTO pix_history VALUES (%s, %s)", (line['hexColor'], line['indexInFlag']))
+        cur.execute(f"INSERT INTO pix_history VALUES (%s, %s, %s)", (line['hexColor'], line['indexInFlag'], line['author']))
     
     conn.commit()
